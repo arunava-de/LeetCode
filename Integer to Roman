@@ -1,0 +1,56 @@
+class Solution:
+    def intToRoman(self, num: int) -> str:
+        if num>=4000:
+            raise ValueError("Integer too large")
+        else:
+            bases = {1:'I',2:'II',3:'III',4:'IV',5:'V',6:'VI',7:'VII',8:'VIII',9:'IX',10:'X',
+                    40:'XL',50:'L',90:'XC',100:'C',400:'CD',500:'D',600:'DC',900:'CM',1000:'M'}
+
+            # Now let us start building the roman representation
+
+            roman = ""
+            count = 0
+            copy = num
+            while copy!=0:
+                copy = copy//10
+                count += 1
+
+            for c in range(1,count+1):
+                dig = num%10
+                if dig==0:
+                    num = num//10
+                    continue
+                if c==1:
+                    roman = bases[dig] + roman
+                elif c==2:
+                    if dig==4:
+                        roman = bases[40] + roman
+                    elif dig==5:
+                        roman = bases[50] + roman
+                    elif dig==9:
+                        roman = bases[90] + roman
+                    else:
+                        if dig<4:
+                            roman = bases[10]*dig + roman
+                        elif dig>5:
+                            roman = bases[50] + bases[10]*(dig-5) + roman
+                elif c==3:
+                    if dig==4:
+                        roman = bases[400] + roman
+                    elif dig==5:
+                        roman = bases[500] + roman
+                    elif dig==6:
+                        roman = bases[600] + roman
+                    elif dig == 9:
+                        roman = bases[900] + roman
+                    else:
+                        if dig<4:
+                            roman = bases[100]*dig + roman
+                        elif dig>5:
+                            roman = bases[500] + bases[100]*(dig-5) + roman
+                else:
+                    roman = bases[1000]*dig + roman
+
+                num = num//10
+
+        return roman
