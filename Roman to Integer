@@ -1,0 +1,25 @@
+class Solution:
+    def romanToInt(self, num: str) -> int:
+        bases =                                 {'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000,'IV':4,'IX':9,'XL':40,'XC':90,'CD':400,'CM':900}
+
+        # Let's try to break up the roman numeral into these bases and transform
+        n = len(num)
+
+        i = 0
+        res = 0
+
+        while i<n:
+            if i+1<n and num[i:i+2] in bases:
+                res += bases[num[i:i+2]]
+                i += 2
+            else:
+                res += bases[num[i]]
+                i += 1
+
+        return res
+
+
+
+
+
+        
