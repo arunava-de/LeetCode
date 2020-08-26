@@ -1,0 +1,37 @@
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+
+        if len(nums)<4:
+            return []
+        nums.sort()
+
+        # Let's find sums of all pairs in the array
+        n = len(nums)
+        sums_dict = {}
+
+        res = []
+
+        for i in range(n-1):
+            for j in range(i+1,n):
+                if nums[i]+nums[j] in sums_dict.keys():
+                    sums_dict[nums[i]+nums[j]].append((i,j))
+                else:
+                    sums_dict[nums[i] + nums[j]] = [(i,j)]
+
+        for i in range(n-1):
+            for j in range(i+1,n):
+                s = nums[i] + nums[j]
+                if (target-s) in sums_dict.keys():
+                    for cand in sums_dict[target-s]:
+                        if cand[0] != i and cand[0] != j and cand[1] != i and cand[1] != j:
+                            quad = [nums[i],nums[j],nums[cand[0]],nums[cand[1]]]
+                            quad.sort()
+                            if quad in res:
+                                continue
+                            res.append(quad)
+
+        return res
+
+
+
+  
