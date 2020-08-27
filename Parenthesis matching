@@ -1,0 +1,31 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        
+        # We can use a stack and ensure that the final stack is empty
+        
+        stack = []
+        
+        if s=="":
+            return True
+        
+        n = len(s)
+        op_to_cl = {'(':')','[':']','{':'}'}
+        # cl = {')',']','}'}
+        
+        for i in range(n):
+            if s[i] in op_to_cl.keys():
+                stack.append(s[i])
+            else:
+                # We encounter a closing bracket
+                if stack == []:
+                    # We are closing bracket even though there are no open brackets
+                    return False
+                else:
+                    if op_to_cl[stack[-1]] == s[i]:
+                        stack.pop()
+                    else:
+                        return False
+        
+        if stack == []:
+            return True
+        return False
