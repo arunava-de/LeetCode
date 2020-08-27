@@ -1,0 +1,36 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        
+        # Approach involves the yardstick method
+        if head.val==None:
+            raise ValueError("Linked list is empty")
+        start = head
+        end = head
+        count = n 
+        
+        while end!=None and count>0:
+            end = end.next
+            count -= 1
+        
+        # Now end is n steps away from start
+        # Now we start traversing and stop when end.next = None
+        
+        if end==None:
+            # This means we need to remove the head
+            head = head.next
+        else:
+            while end.next!=None:
+                end = end.next
+                start = start.next
+        
+            # Now start will be the parent of the node we want to remove
+
+            start.next = start.next.next
+        
+        return head
+        
