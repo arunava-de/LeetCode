@@ -1,0 +1,23 @@
+# Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+def generateParenthesis(n):
+    if n==0:
+        return []
+    mapping = {'(':n,')':n}
+    ans = []
+    helper(mapping, ans)
+
+    return ans
+
+def helper(mapping, ans, temp=''):
+    if mapping['(']==0 and mapping[')']==0:
+        ans.append(temp)
+        return
+
+    if mapping['(']>0:
+        helper({'(':mapping['(']-1,')':mapping[')']}, ans, temp + '(')
+
+    if mapping[')']>mapping['(']:
+        helper({'(': mapping['('], ')': mapping[')']-1},ans, temp + ')')
+
+print(generateParenthesis((3)))
