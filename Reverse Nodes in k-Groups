@@ -1,0 +1,20 @@
+class Solution:
+        
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        
+        current = head
+        nxt = None
+        prev = None
+        count = 0
+        
+        while (current is not None and count<k):
+            nxt = current.next
+            current.next = prev
+            prev = current
+            current = nxt
+            count += 1
+            
+        if nxt is not None:
+            head.next = self.reverseKGroup(nxt, k)
+            
+        return prev
