@@ -1,0 +1,47 @@
+class Solution:
+      
+    def checkSubstring(self, s, start, end, words_dict):
+        # Here ensure words is a set
+        temp =  ""
+        # print(start, end)
+        for i in range(start,end+1):
+            temp = temp + s[i]
+            if temp in words_dict.keys():
+                words_dict[temp] -= 1
+                temp = ""
+
+        if temp!="":
+            return False
+        
+        for w in words_dict.keys():
+            if words_dict[w]!=0:
+                return False
+
+        return True
+
+    def to_dict(self, words):
+        temp = {}
+        for w in words:
+            if w in temp.keys():
+                temp[w] += 1
+            else:
+                 temp[w] = 1
+        return temp 
+    
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        # Idea is to skim through s with a window of size sum of lengths of w in words
+        # For each of these fixed length substring, run another pointer through them and check membership in words, deleting
+        # instances you find
+
+        window = sum(len(w) for w in words)
+        words_dict = self.to_dict(words)
+
+        i = 0
+        res = []
+        while i+window-1<len(s):
+            if self.checkSubstring(s, i, i+window-1, words_dict):
+                res.append(i)
+            words_dict = self.to_dict(words)
+            i += 1
+
+        return res
