@@ -1,0 +1,32 @@
+class Solution:
+    def divide(self, dividend: int, divisor: int) -> int:
+        
+        if divisor==1:
+            if dividend>2147483647:
+                return 2147483647
+            return dividend
+        if divisor==-1:
+            if -dividend>2147483647:
+                return 2147483647
+            return -dividend
+        
+        counter = 0
+        temp = 0
+        temp_divisor = abs(divisor)
+        temp_dividend = abs(dividend)
+        
+        while temp<temp_dividend:
+            temp += temp_divisor
+            counter += 1
+        if temp==temp_dividend:
+            counter += 1
+            
+        if (divisor<0)^(dividend<0):
+            if -(counter-1)<-2147483648:
+                return 2147483647
+            
+            return -(counter-1)
+        else:
+            if counter-1>2147483647:
+                return 2147483647
+            
