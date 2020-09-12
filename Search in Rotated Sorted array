@@ -1,0 +1,36 @@
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        
+        if nums==[]:
+            return -1
+        elif len(nums)==1:
+            if nums[0]==target:
+                return 0
+            else:
+                return -1
+        
+        high = len(nums)-1
+        low = 0
+        
+        while low<=high:
+            mid = low + (high-low)//2
+            
+            if target==nums[mid]:
+                return mid
+            # If low,..,mid is sorted, run binary search on this
+            if nums[low]<=nums[mid]:
+                # If target is in left part
+                if nums[low]<=target and target<=nums[mid]:
+                    high = mid-1
+                else:
+                    # Target not in left half, go to right
+                    low = mid+1
+            # If mid,....,high is sorted, run binary search on that half
+            else:
+                if nums[mid]<=target and target<=nums[high]:
+                    low = mid+1
+                else:
+                    # Target not in right half, go to left
+                    high = mid-1
+        
+        return -1
