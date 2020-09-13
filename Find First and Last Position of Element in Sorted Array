@@ -1,0 +1,65 @@
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        
+        if len(nums)==0:
+            return [-1,-1]
+        elif len(nums)==1:
+            if nums[0]==target:
+                return [0,0]
+            else:
+                return [-1,-1]
+        
+        low = 0
+        high = len(nums)-1
+        f = 0
+        
+        # Let's look for leftmost occurence of target
+        while low<=high:
+            
+            mid = low + (high-low)//2
+            
+            if nums[mid]==target:
+                f = 1
+                # Checking if left size has target or not
+                if mid == 0:
+                    break
+                if nums[mid-1] == target:
+                    high = mid-1
+                else:
+                    break
+            elif nums[mid]<target:
+                low = mid + 1
+            else:
+                high = mid - 1
+        
+        # mid has left-most occurence of target
+        if f==0:
+            return [-1,-1]
+        
+        left = mid 
+        
+        # We can run another binary search to find right most occurence 
+        
+        low = 0
+        high = len(nums)-1
+        # f = 0
+        
+        while low<=high:
+            
+            mid = low + (high-low)//2
+            
+            if nums[mid]==target:
+                if mid == len(nums)-1:
+                    break
+                if nums[mid+1] == target:
+                    low = mid+1
+                else:
+                    break
+            elif nums[mid]<target:
+                low = mid + 1
+            else:
+                high = mid - 1
+        
+        right = mid
+        
+        return [left,right]
